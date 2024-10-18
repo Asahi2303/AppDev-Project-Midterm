@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, TextInput, Alert, ImageBackground } from 'react-native';
+import { StyleSheet, View, TextInput, Alert, ImageBackground, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 function SignUpScreen() {
@@ -10,7 +10,7 @@ function SignUpScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
- const handleSignUp = () => {
+  const handleSignUp = () => {
     // Example: Simple sign-up check
     if (firstName && lastName && username && password) {
       Alert.alert('Sign Up Successful');
@@ -22,7 +22,7 @@ function SignUpScreen() {
 
   return (
     <ImageBackground
-      source={require('./assets/background.jpg')} // Adjust the path as necessary
+      source={require('../assets/AP2.png')} // Adjust the path as necessary
       style={styles.background}
     >
       <View style={styles.container}>
@@ -58,9 +58,9 @@ function SignUpScreen() {
           onChangeText={setPassword}
         />
         <View style={styles.buttonContainer}>
-          <View style={styles.buttonWrapper}>
-            <Button title="Sign Up" onPress={handleSignUp} />
-          </View>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ImageBackground>
@@ -91,14 +91,21 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row', // Arrange buttons in a row
     justifyContent: 'center', // Center the button
-    width: '80%', // Make it responsive
+    width: '100%', // Make it responsive
   },
-  buttonWrapper: {
-    flex: 1, // Allow button to take equal space
-    marginHorizontal: 5, // Add some horizontal margin between buttons
-    borderRadius: 5, // Optional: for rounded corners
-    overflow: 'hidden', // Clip the button to the border radius
-    backgroundColor: 'white', // Example background color for the button container
+  button: {
+    backgroundColor: 'black', // Light background for subtle effect
+    paddingVertical: 13, // Vertical padding
+    paddingHorizontal: 22, // Horizontal padding
+    borderRadius: 5, // Rounded corners
+    borderWidth: 1, // Border width
+    borderColor: '#fff', // Border color
+    alignItems: 'center', // Center text inside the button
+  },
+  buttonText: {
+    color: '#fff', // Text color
+    fontSize: 16, // Font size
+    textAlign: 'center', // Center text
   },
 });
 
