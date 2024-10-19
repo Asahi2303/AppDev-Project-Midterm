@@ -38,16 +38,13 @@ export default function App() {
               style={styles.background}
             >
               <View style={styles.container}>
-                {/* Logo Container with Left and Right Logos */}
+                {/* Logo Container with Left Logo Only */}
                 <View style={styles.logoContainer}>
                   <Image
                     source={require('./assets/cdmlogo.png')}
                     style={styles.logo}
                   />
-                  <Image
-                    source={require('./assets/icslogo.png')}
-                    style={styles.logo}
-                  />
+                  {/* Removed the second logo */}
                 </View>
                 <View style={styles.contentContainer}>
                   <TextInput
