@@ -57,10 +57,40 @@ function AboutUsScreen({ navigation }) {
             />
             <View style={styles.textContainer}>
               <Text style={styles.imageTitle}>Jayvee Balcuba</Text>
-              <Text style={styles.imageSubtitle}>Designer</Text>
+              <Text style={styles.imageSubtitle}>Figma Designer</Text>
             </View>
           </View>
         </View>
+        <View style={styles.imageWithText}>
+            <Image 
+              source={require('../assets/abtuspictures/mercy.jpg')} 
+              style={styles.image}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.imageTitle}>Mercy Burdios</Text>
+              <Text style={styles.imageSubtitle}>Content suggester</Text>
+            </View>
+          </View>
+          <View style={styles.imageWithText}>
+            <Image 
+              source={require('../assets/abtuspictures/serante.jpg')} 
+              style={styles.image}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.imageTitle}>Jennelyn Serante</Text>
+              <Text style={styles.imageSubtitle}>.....</Text>
+            </View>
+          </View>
+          <View style={styles.imageWithText}>
+            <Image 
+              source={require('../assets/abtuspictures/sicup.jpg')} 
+              style={styles.image}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.imageTitle}>Jahleel Sicup</Text>
+              <Text style={styles.imageSubtitle}>....</Text>
+            </View>
+          </View>
 
         <Text style={styles.subTitle}>Contact Us</Text>
         <Text style={styles.content}>
@@ -101,7 +131,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic', 
     fontSize: 24,
     marginTop: 20,
-    color: 'Gray',
+    color: 'black',
     textAlign: 'left',
     width: '100%',
   },
@@ -138,7 +168,7 @@ const styles = StyleSheet.create({
   },
   imageSubtitle: {
     fontSize: 16,
-    color: 'gray',
+    color: 'black',
   },
   buttonsContainer: {
     position: '',

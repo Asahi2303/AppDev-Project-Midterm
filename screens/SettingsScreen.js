@@ -46,7 +46,7 @@ function SettingsScreen({ navigation }) {
           <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
 
-        <Text style={styles.content}>Settings page content goes here.</Text>
+        <Text style={styles.content}>.</Text>
       </View>
 
       {/* Fixed Buttons Container at the Bottom */}
