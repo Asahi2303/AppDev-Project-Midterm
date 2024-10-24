@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, ImageBackground, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
 
 // Import images
 import image1 from '../assets/2pgassets/1.jpg';
@@ -8,6 +8,18 @@ import image3 from '../assets/2pgassets/3.jpg';
 import image4 from '../assets/2pgassets/4.jpg';
 
 function SecondPage({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageTitle, setSelectedImageTitle] = useState('');
+  const [selectedImageCreator, setSelectedImageCreator] = useState('');
+
+  const handleImagePress = (image, title, creator) => {
+    setSelectedImage(image);
+    setSelectedImageTitle(title);
+    setSelectedImageCreator(creator);
+    setModalVisible(true);
+  };
+
   return (
     <ImageBackground
       source={require('../assets/APBCKG.png')} // Adjust the path as necessary
@@ -19,28 +31,52 @@ function SecondPage({ navigation }) {
 
           {/* Display images and their titles/creators vertically */}
           <View style={styles.imageContainer}>
-      <Image source={image1} style={[styles.image, { backgroundColor: 'black' }]} />
-      <Text style={styles.imageTitle}>Planting RIce</Text>
-      <Text style={styles.imageCreator}>By Fernando Amorsolo</Text>
-      </View>
+            <TouchableOpacity onPress={() => handleImagePress(image1, 'Planting Rice', 'By Fernando Amorsolo')}>
+              <Image source={image1} style={[styles.image, { backgroundColor: 'black' }]} />
+            </TouchableOpacity>
+            <Text style={styles.imageTitle}>Planting Rice</Text>
+            <Text style={styles.imageCreator}></Text>
+          </View>
 
           <View style={styles.imageContainer}>
-            <Image source={image2} style={styles.image} />
+            <TouchableOpacity onPress={() => handleImagePress(image2, 'Spoliarium', 'By Juan Luna')}>
+              <Image source={image2} style={styles.image} />
+            </TouchableOpacity>
             <Text style={styles.imageTitle}>Spoliarium </Text>
-            <Text style={styles.imageCreator}>By Juan Luna</Text>
+            <Text style={styles.imageCreator}></Text>
           </View>
 
           <View style={styles.imageContainer}>
-            <Image source={image3} style={styles.image} />
+            <TouchableOpacity onPress={() => handleImagePress(image3, 'Las Virgenes Cristianas Expuestas al Populacho', 'By Félix Resurreccion Hidalgo')}>
+              <Image source={image3} style={styles.image} />
+            </TouchableOpacity>
             <Text style={styles.imageTitle}>Las Virgenes Cristianas Expuestas al Populacho</Text>
-            <Text style={styles.imageCreator}>By Félix Resurreccion Hidalgo</Text>
+            <Text style={styles.imageCreator}></Text>
           </View>
 
           <View style={styles.imageContainer}>
-            <Image source={image4} style={styles.image} />
+            <TouchableOpacity onPress={() => handleImagePress(image4, 'Fruit Gatherer', 'By Fernando Amorsolo')}>
+              <Image source={image4} style={styles.image} />
+            </TouchableOpacity>
             <Text style={styles.imageTitle}>Fruit Gatherer</Text>
-            <Text style={styles.imageCreator}>By Fernando Amorsolo</Text>
+            <Text style={styles.imageCreator}></Text>
           </View>
+
+          {/* Modal for zoomed image */}
+          <Modal
+            visible={modalVisible}
+            transparent={true}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <Image source={selectedImage} style={styles.modalImage} />
+              <Text style={styles.modalImageTitle}>{selectedImageTitle}</Text>
+              <Text style={styles.modalImageCreator}>{selectedImageCreator}</Text>
+              <TouchableOpacity style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
+                <Text style={styles.modalCloseButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
 
           {/* Buttons at the bottom */}
           <View style={styles.buttonsContainer}>
@@ -58,10 +94,45 @@ function SecondPage({ navigation }) {
       </ScrollView>
     </ImageBackground>
   );
-}
+ }
 
 const styles = StyleSheet.create({
-  background: {
+  // ... existing styles ...
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba( 0, 0, 0, 0.5)',
+  },
+  modalImage: {
+    width: '80%',
+    height: '60%',
+    resizeMode: 'contain',
+    borderRadius: 10,
+  },
+  modalImageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginTop: 10,
+  },
+  modalImageCreator: {
+    fontSize: 16,
+    color: 'white',
+    marginTop: 5,
+  },
+  modalCloseButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  modalCloseButtonText: {
+    fontSize: 16,
+    color: 'black',
+  },
+
+background: {
     flex: 1,
   },
   container: {
@@ -78,6 +149,7 @@ const styles = StyleSheet.create({
     fontFamily: 'arial',
     fontSize: 24,
     marginBottom: 20,
+    marginTop: 20,
     color: 'black',
   },
   imageContainer: {

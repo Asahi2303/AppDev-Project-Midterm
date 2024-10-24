@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Alert, ImageBackground, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
 function SignUpScreen() {
   const navigation = useNavigation();
@@ -26,37 +27,59 @@ function SignUpScreen() {
       style={styles.background}
     >
       <View style={styles.container}>
-        <TextInput
-          style={styles.textBox}
-          placeholder="First Name"
-          value={firstName}
-          onChangeText={setFirstName}
-        />
-        <TextInput
-          style={styles.textBox}
-          placeholder="Middle Name"
-          value={middleName}
-          onChangeText={setMiddleName}
-        />
-        <TextInput
-          style={styles.textBox}
-          placeholder="Last Name"
-          value={lastName}
-          onChangeText={setLastName}
-        />
-        <TextInput
-          style={styles.textBox}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-        />
-        <TextInput
-          style={styles.textBox}
-          placeholder="Password"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
-        />
+        <Text style={styles.title}>Create Account</Text>
+        
+        <View style={styles.inputContainer}>
+          <Ionicons name="person" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="person" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="Middle Name"
+            value={middleName}
+            onChangeText={setMiddleName}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="person" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="person-circle" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="lock-closed" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="Password"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Sign Up</Text>
@@ -77,35 +100,52 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    opacity: 0.8, // Optional: to make the background slightly visible
+    opacity: 0.9, // Optional: to make the background slightly visible
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 20,
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    marginBottom: 15,
+    width: '100%',
+    paddingHorizontal: 10,
+    elevation: 2, // Add shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   textBox: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    width: '80%', // Make it responsive
-    backgroundColor: '#fff', // White background for text input
+    flex: 1,
+    marginLeft: 10,
+    color: 'black',
   },
   buttonContainer: {
-    flexDirection: 'row', // Arrange buttons in a row
-    justifyContent: 'center', // Center the button
-    width: '100%', // Make it responsive
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
   },
   button: {
-    backgroundColor: 'black', // Light background for subtle effect
-    paddingVertical: 13, // Vertical padding
-    paddingHorizontal: 22, // Horizontal padding
-    borderRadius: 5, // Rounded corners
-    borderWidth: 1, // Border width
-    borderColor: '#fff', // Border color
-    alignItems: 'center', // Center text inside the button
-  },
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    borderColor: '#ddd',
+    borderWidth: 1,
+
+ },
   buttonText: {
-    color: '#fff', // Text color
-    fontSize: 16, // Font size
-    textAlign: 'center', // Center text
+    fontSize: 18,
+    color: 'blue',
+    fontWeight: '',
   },
 });
 

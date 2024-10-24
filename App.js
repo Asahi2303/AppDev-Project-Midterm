@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, View, Button, TextInput, Alert, ImageBackground, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 import SecondPage from './screens/SecondPage';
 import AboutUsScreen from './screens/AboutUsScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -14,9 +15,7 @@ export default function App() {
   const [password, setPassword] = useState('');
 
   const handleLogin = (navigation) => {
-    // Example: Simple login check
     if (username === 'admin' && password === 'password') {
-      // Navigate to Second Page on successful login
       navigation.navigate('SecondPage');
     } else {
       Alert.alert('Invalid username or password');
@@ -24,13 +23,12 @@ export default function App() {
   };
 
   const handleSignUp = (navigation) => {
-    // Navigate to Sign Up screen
     navigation.navigate('SignUp');
   };
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login">
           {({ navigation }) => (
             <ImageBackground
@@ -38,29 +36,32 @@ export default function App() {
               style={styles.background}
             >
               <View style={styles.container}>
-                {/* Logo Container with Left Logo Only */}
                 <View style={styles.logoContainer}>
                   <Image
                     source={require('./assets/cdmlogo.png')}
                     style={styles.logo}
                   />
-                  {/* Removed the second logo */}
                 </View>
                 <View style={styles.contentContainer}>
-                  <TextInput
-                    style={styles.textBox}
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={setUsername}
-                  />
-                  <TextInput
-                    style={styles.textBox}
-                    placeholder="Password"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={setPassword}
-                  />
-                  {/* Buttons Row */}
+                  <View style={styles.inputContainer}>
+                    <Ionicons name="person" size={24} color="black" />
+                    <TextInput
+                      style={styles.textBox}
+                      placeholder="Username"
+                      value={username}
+                      onChangeText={setUsername}
+                    />
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <Ionicons name="lock-closed" size={24} color="black" />
+                    <TextInput
+                      style={styles.textBox}
+                      placeholder="Password"
+                      secureTextEntry={true}
+                      value={password}
+                      onChangeText={setPassword}
+                    />
+                  </View>
                   <View style={styles.buttonsRow}>
                     <View style={styles.buttonWrapper}>
                       <Button title="Login" onPress={() => handleLogin(navigation)} />
@@ -74,10 +75,10 @@ export default function App() {
             </ImageBackground>
           )}
         </Stack.Screen>
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="SecondPage" component={SecondPage} />
-        <Stack.Screen name="AboutUs" component={AboutUsScreen} />
-        <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SecondPage" component={SecondPage} options={{ headerShown: false }} />
+        <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -93,21 +94,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    opacity: 0.8, // Optional: to make the background slightly visible
+    opacity: 0.8,
   },
   logoContainer: {
     position: 'absolute',
     top: 20,
     left: 0,
     right: 0,
-    flexDirection: 'row', // Align logos in a row
-    justifyContent: 'space-between', // Space logos to the edges
-    alignItems: 'center', // Center logos vertically
-    paddingHorizontal: 20, // Add horizontal padding
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   logo: {
-    width: 100, // Set width for logos
-    height: 100, // Set height for logos (make sure both logos are the same size)
+    width: 100,
+    height: 100,
   },
   contentContainer: {
     flex: 1,
@@ -115,20 +116,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 20,
+    width: 350,
+    paddingHorizontal: 10,
+    elevation: 2, // Add shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
   textBox: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    width: 350, // Make it responsive
-    borderRadius: 10,
-    backgroundColor: '#fff', // White background for text input
+    flex:  1,
+    marginLeft: 10,
+    color: 'black',
   },
   buttonsRow: {
-    flexDirection: 'row', // Set the direction to row
-    justifyContent: 'space-between', // Space buttons evenly
-    alignItems: 'center', // Center buttons vertically
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
   buttonWrapper: {
     flex: 1, // Allow buttons to take equal space

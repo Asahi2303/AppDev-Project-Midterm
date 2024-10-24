@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Make sure to install this package
 
 function SettingsScreen({ navigation }) {
   // State variables for user information
@@ -12,49 +13,56 @@ function SettingsScreen({ navigation }) {
       source={require('../assets/APBCKG.png')} // Ensure the path is correct
       style={styles.background}
     >
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Settings</Text>
-        
+
         {/* Text Inputs for User Information */}
-        <TextInput
-          style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor="#ccc"
-          value={fullName}
-          onChangeText={setFullName}
-        />
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor="#ccc"
-          value={username}
-          onChangeText={setUsername}
-        />
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Email Address"
-          placeholderTextColor="#ccc"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        
+        <View style={styles.inputContainer}>
+          <Ionicons name="person" size={24} color="black" />
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            placeholderTextColor="#ccc"
+            value={fullName}
+            onChangeText={setFullName}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="person-circle" size={24} color="black" />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor="#ccc"
+            value={username}
+            onChangeText={setUsername}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Ionicons name="mail" size={24} color="black" />
+          <TextInput
+            style={styles.input}
+            placeholder="Email Address"
+            placeholderTextColor="#ccc"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+        </View>
+
         {/* Change Password Button */}
         <TouchableOpacity style={styles.changePasswordButton} onPress={() => alert('Change Password Pressed')}>
           <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
 
-        <Text style={styles.content}>.</Text>
-      </View>
-
-      {/* Fixed Buttons Container at the Bottom */}
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SecondPage')}>
-          <Text style={styles.buttonText}>Go to Home</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Fixed Buttons Container at the Bottom */}
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SecondPage')}>
+            <Text style={styles.buttonText}>Go to Home</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 }
@@ -62,39 +70,53 @@ function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    justifyContent: 'center',
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     marginBottom: 20,
-    color: 'black',
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    marginBottom: 15,
+    width: '100%',
+    paddingHorizontal: 10,
+    elevation: 2, // Add shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-    width: '100%', // Full width
-    color: 'black', // Text color
+    flex: 1,
+    marginLeft: 10,
+    color: 'black',
   },
   changePasswordButton: {
-    backgroundColor: 'black',
-    paddingVertical: 10,
+    backgroundColor: '#007BFF',
+    paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 20,
+    marginVertical: 20,
+    width: '100%',
+    alignItems: 'center',
   },
-  content: {
-    color: 'gray',
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
   },
   buttonsContainer: {
     position: 'absolute',
@@ -110,13 +132,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
+    marginHorizontal: 5,
   },
 });
 
