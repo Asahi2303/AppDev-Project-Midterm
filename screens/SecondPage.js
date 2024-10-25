@@ -111,9 +111,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   modalImageTitle: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'Quicksand',
     marginTop: 10,
   },
   modalImageCreator: {
@@ -146,8 +147,9 @@ background: {
   },
   title: {
     fontStyle: 'italic',
-    fontFamily: 'arial',
-    fontSize: 24,
+    fontFamily: 'Quicksand',
+    backgroundColor: 'white',
+    fontSize: 30,
     marginBottom: 20,
     marginTop: 20,
     color: 'black',
@@ -162,10 +164,12 @@ background: {
     resizeMode: 'cover', // Adjust how the image should be resized
   },
   imageTitle: {
-    fontSize: 18,
+    fontSize: 20,
+    fontFamily: 'Quicksand',
     fontWeight: 'bold',
     marginTop: 10, // Space between image and title
     color: 'black',
+    backgroundColor: '#fff'
   },
   imageCreator: {
     fontSize: 16,
@@ -178,19 +182,21 @@ background: {
     paddingVertical: 10,
   },
   button: {
-    backgroundColor: 'black',
+    backgroundColor: '#fff',
+    margin: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: '#ddd',
     width: '30%',
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
+    fontFamily:'PlayfairDisplay',
   },
 });
 

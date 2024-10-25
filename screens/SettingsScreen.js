@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Make sure to install this package
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 function SettingsScreen({ navigation }) {
-  // State variables for user information
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [privacyEnabled, setPrivacyEnabled] = useState(false);
+
+  const handleSave = () => {
+    // Basic validation for email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
+      return;
+    }
+    // Here you would typically save the settings
+    Alert.alert('Settings Saved', 'Your settings have been updated successfully.');
+  };
 
   return (
     <ImageBackground
-      source={require('../assets/APBCKG.png')} // Ensure the path is correct
+      source={require('../assets/APBCKG.png')}
       style={styles.background}
     >
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Settings</Text>
-
-        {/* Text Inputs for User Information */}
+        <Text style={styles.subtitle}>Update Your Profile</Text>
         <View style={styles.inputContainer}>
           <Ionicons name="person" size={24} color="black" />
           <TextInput
@@ -51,12 +62,28 @@ function SettingsScreen({ navigation }) {
           />
         </View>
 
-        {/* Change Password Button */}
+        <View style={styles.switchContainer}>
+          <Text style={styles.switchLabel}>Enable Notifications: </Text>
+          <TouchableOpacity style={styles.switchButton} onPress={() => setNotificationsEnabled(!notificationsEnabled)}>
+            <Text style={styles.switchText}>{notificationsEnabled ? 'ON' : 'OFF'}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.switchContainer}>
+          <Text style={styles.switchLabel}>Privacy Mode: </Text>
+          <TouchableOpacity style={styles.switchButton} onPress={() => setPrivacyEnabled(!privacyEnabled)}>
+            <Text style={styles.switchText}>{privacyEnabled ? 'ON' : 'OFF'}</Text>
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity style={styles.changePasswordButton} onPress={() => alert('Change Password Pressed')}>
           <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
 
-        {/* Fixed Buttons Container at the Bottom */}
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.buttonText}>Save Settings</Text>
+        </TouchableOpacity>
+
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SecondPage')}>
             <Text style={styles.buttonText}>Go to Home</Text>
@@ -84,55 +111,78 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight: 'bold',
   },
+  subtitle:{
+    fontSize: 15,
+    color: '#333',
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 5,
-    marginBottom: 15,
-    width: '100%',
-    paddingHorizontal: 10,
-    elevation: 2, // Add shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+ padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
+    borderColor: '#ddd',
+    borderWidth: 1,
   },
   input: {
-    height: 40,
     flex: 1,
-    marginLeft: 10,
-    color: 'black',
+    fontSize: 16,
+    padding: 8,
+    color: '#333',
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
+    marginBottom: 16,
+    backgroundColor: '#fff',
+  },
+  switchLabel: {
+    fontSize: 16,
+    color: '#333',
+  },
+  switchButton: {
+    backgroundColor: '#ddd',
+    padding: 8,
+    borderRadius: 10,
+  },
+  switchText: {
+    fontSize: 16,
+    color: '#333',
   },
   changePasswordButton: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginVertical: 20,
-    width: '100%',
-    alignItems: 'center',
+    backgroundColor: '#333',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
+  saveButton: {
+    backgroundColor: '#333',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
   },
   buttonsContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 20,
+    justifyContent: 'space-between',
+    padding: 12,
   },
   button: {
-    backgroundColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginHorizontal: 5,
+    backgroundColor: '#333',
+    padding: 12,
+    borderRadius: 10,
+    flex: 1,
+    marginRight: 16,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

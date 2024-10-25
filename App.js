@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, View, Button, TextInput, Alert, ImageBackground, Image } from 'react-native';
+import { StyleSheet, View, Button, TextInput, Alert, ImageBackground, Image, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
+import { useFonts } from 'expo-font';
 import SecondPage from './screens/SecondPage';
 import AboutUsScreen from './screens/AboutUsScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -13,6 +14,19 @@ const Stack = createStackNavigator();
 export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  // Load custom fonts
+  const [fontsLoaded] = useFonts({
+    'Quicksand': require('./assets/fonts/Quicksand.ttf'),
+    'Lora': require('./assets/fonts/Lora.ttf'),
+    'Loraitalic': require('./assets/fonts/Loraitalic.ttf'),
+    'PlayfairDisplay': require('./assets/fonts/PlayfairDisplay.ttf'),
+    'PlayfairDisplayitalic': require('./assets/fonts/PlayfairDisplayita.ttf'), // Load the custom font
+  });
+
+  if (!fontsLoaded) {
+    return null; // You can return a loading indicator here if needed
+  }
 
   const handleLogin = (navigation) => {
     if (username === 'admin' && password === 'password') {
@@ -110,7 +124,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  contentContainer: {
+ contentContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,37 +133,31 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginBottom: 20,
-    width: 350,
-    paddingHorizontal: 10,
-    elevation: 2, // Add shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+    paddingVertical: 10,
   },
   textBox: {
-    height: 40,
-    flex:  1,
-    marginLeft: 10,
-    color: 'black',
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontSize: 18,
+    fontFamily: 'Quicksand', // Use the custom font
+    borderRadius: 1,
+    borderColor: '#ddd',
+    borderWidth: 1,
   },
   buttonsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 5,
   },
   buttonWrapper: {
-    flex: 1, // Allow buttons to take equal space
-    padding: 4, // Add some padding
-    backgroundColor: '#fff', // White background for individual buttons
-    borderRadius: 10, // Add a rounded corner
-    borderColor: '#ddd', // Light gray border
-    borderWidth: 1, // Add a border
-    height: 50, // Define a specific height for the button wrapper
-    width: 50, // Set a specific width for the button wrapper
+    flex: 1,
+    paddingHorizontal: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    borderWidth: 1,
+    margin: 5,
+    backgroundColor: '#fff',
   },
 });
