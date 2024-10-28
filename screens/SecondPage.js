@@ -97,7 +97,6 @@ function SecondPage({ navigation }) {
  }
 
 const styles = StyleSheet.create({
-  // ... existing styles ...
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -155,26 +154,26 @@ background: {
     color: 'black',
   },
   imageContainer: {
-    marginBottom: 30, // Space between image sections
-    alignItems: 'center', // Center align text below images
+    marginBottom: 30, 
+    alignItems: 'center', 
   },
   image: {
-    width: 350, // Adjust width as needed
-    height: 200, // Set height for the images
-    resizeMode: 'cover', // Adjust how the image should be resized
+    width: 350, 
+    height: 200, 
+    resizeMode: 'cover', 
   },
   imageTitle: {
     fontSize: 20,
     fontFamily: 'Quicksand',
     fontWeight: 'bold',
-    marginTop: 10, // Space between image and title
+    marginTop: 10, 
     color: 'black',
     backgroundColor: '#fff'
   },
   imageCreator: {
     fontSize: 16,
-    marginTop: 5, // Space between title and
-    color: 'gray', // Different color for the creator's name
+    marginTop: 5, 
+    color: 'gray', 
   },
   buttonsContainer: {
     flexDirection: 'row',
