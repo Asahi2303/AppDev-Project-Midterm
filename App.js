@@ -16,16 +16,16 @@ export default function App() {
   const [password, setPassword] = useState('');
 
   // Load custom fonts
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({ //loading or using custom fonts from google
     'Quicksand': require('./assets/fonts/Quicksand.ttf'),
     'Lora': require('./assets/fonts/Lora.ttf'),
     'Loraitalic': require('./assets/fonts/Loraitalic.ttf'),
     'PlayfairDisplay': require('./assets/fonts/PlayfairDisplay.ttf'),
-    'PlayfairDisplayitalic': require('./assets/fonts/PlayfairDisplayita.ttf'), // Load the custom font
+    'PlayfairDisplayitalic': require('./assets/fonts/PlayfairDisplayita.ttf'), 
   });
 
   if (!fontsLoaded) {
-    return null; // You can return a loading indicator here if needed
+    return null; 
   }
 
   const handleLogin = (navigation) => {
@@ -46,7 +46,7 @@ export default function App() {
         <Stack.Screen name="Login">
           {({ navigation }) => (
             <ImageBackground
-              source={require('./assets/AP.png')} // Ensure this path is correct
+              source={require('./assets/AP.png')} //background
               style={styles.background}
             >
               <View style={styles.container}>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     fontSize: 18,
-    fontFamily: 'Quicksand', // Use the custom font
+    fontFamily: 'Quicksand', // custom font usage
     borderRadius: 1,
     borderColor: '#ddd',
     borderWidth: 1,
