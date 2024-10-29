@@ -46,7 +46,7 @@ export default function App() {
         <Stack.Screen name="Login">
           {({ navigation }) => (
             <ImageBackground
-              source={require('./assets/AP.png')} //background
+              source={require('./assets/APBCKG.jpg')} //background
               style={styles.background}
             >
               <View style={styles.container}>
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
+    fontcolor: 'black',
   },
   textBox: {
     flex: 1,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Quicksand', // custom font usage
     borderRadius: 1,
-    borderColor: '#ddd',
+    borderColor: 'black',
     borderWidth: 1,
   },
   buttonsRow: {

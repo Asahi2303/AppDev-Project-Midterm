@@ -114,13 +114,13 @@ const teamMembers = [
   },
   {
     name: 'Jennelyn Serante',
-    role: '.....',
+    role: 'Figma Designer',
     image: require('../assets/abtuspictures/serante.jpg'),
     description: 'Figma designer for group 7.',
   },
   {
     name: 'Jahleel Sicup',
-    role: '....',
+    role: 'Figma Designer',
     image: require('../assets/abtuspictures/sicup.jpg'),
     description: 'Figma designer for group 7.',
   },

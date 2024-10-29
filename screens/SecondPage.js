@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
 
 // Import images
-import image1 from '../assets/2pgassets/1.jpg';
-import image2 from '../assets/2pgassets/2.jpg';
-import image3 from '../assets/2pgassets/3.jpg';
-import image4 from '../assets/2pgassets/4.jpg';
+import image1 from '../assets/2pgassets/edsa.jpg';
+import image2 from '../assets/2pgassets/mass.jpg';
+import image3 from '../assets/2pgassets/revolt.jpg';
+import image4 from '../assets/2pgassets/mutiny.png';
 
 function SecondPage({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,38 +27,38 @@ function SecondPage({ navigation }) {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Text style={styles.title}>Famous Filipino Artworks</Text>
+          <Text style={styles.title}>Filipino History</Text>
 
           {/* Display images and their titles/creators vertically */}
           <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={() => handleImagePress(image1, 'Planting Rice', 'By Fernando Amorsolo')}>
+            <TouchableOpacity onPress={() => handleImagePress(image1, 'Edsa Revolution', 'a series of popular demonstrations in the Philippines, mostly in Metro Manila, from February 22 to 25, 1986.')}>
               <Image source={image1} style={[styles.image, { backgroundColor: 'black' }]} />
             </TouchableOpacity>
-            <Text style={styles.imageTitle}>Planting Rice</Text>
+            <Text style={styles.imageTitle}>Edsa Revolution</Text>
             <Text style={styles.imageCreator}></Text>
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={() => handleImagePress(image2, 'Spoliarium', 'By Juan Luna')}>
+            <TouchableOpacity onPress={() => handleImagePress(image2, 'First Mass in the Philippines', ' Limasawa in Southern Leyte as the venue of the first Mass, held on March 31, 1521')}>
               <Image source={image2} style={styles.image} />
             </TouchableOpacity>
-            <Text style={styles.imageTitle}>Spoliarium </Text>
+            <Text style={styles.imageTitle}>First Mass in Limasawa</Text>
             <Text style={styles.imageCreator}></Text>
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={() => handleImagePress(image3, 'Las Virgenes Cristianas Expuestas al Populacho', 'By Félix Resurreccion Hidalgo')}>
+            <TouchableOpacity onPress={() => handleImagePress(image3, 'Philippine Revolution', 'Was a war of independence waged by the revolutionary organization Katipunan against the Spanish Empire from 1896 to 1898')}>
               <Image source={image3} style={styles.image} />
             </TouchableOpacity>
-            <Text style={styles.imageTitle}>Las Virgenes Cristianas Expuestas al Populacho</Text>
+            <Text style={styles.imageTitle}>Philippine Revolution</Text>
             <Text style={styles.imageCreator}></Text>
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={() => handleImagePress(image4, 'Fruit Gatherer', 'By Fernando Amorsolo')}>
+            <TouchableOpacity onPress={() => handleImagePress(image4, '1872 Cavite mutiny', 'was an uprising of Filipino military personnel of Fort San Felipe, the Spanish arsenal in Cavite, Philippine Islands (then also known as part of the Spanish East Indies) on January 20, 1872.')}>
               <Image source={image4} style={styles.image} />
             </TouchableOpacity>
-            <Text style={styles.imageTitle}>Fruit Gatherer</Text>
+            <Text style={styles.imageTitle}>Cavite Mutiny</Text>
             <Text style={styles.imageCreator}></Text>
           </View>
 
@@ -114,12 +114,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'Quicksand',
-    marginTop: 10,
+    marginTop: -100,
   },
   modalImageCreator: {
     fontSize: 16,
     color: 'white',
-    marginTop: 5,
+    marginTop: -5,
   },
   modalCloseButton: {
     backgroundColor: 'white',

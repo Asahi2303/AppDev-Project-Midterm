@@ -23,7 +23,7 @@ function SignUpScreen() {
 
   return (
     <ImageBackground
-      source={require('../assets/AP2.png')} // Adjust the path as necessary
+      source={require('../assets/APBCKG2.jpg')} // Adjust the path as necessary
       style={styles.background}
     >
       <View style={styles.container}>

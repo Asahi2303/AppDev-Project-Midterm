@@ -29,10 +29,10 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.title}>Settings</Text>
         <Text style={styles.subtitle}>Update Your Profile</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="person" size={24} color="black" />
+          <Ionicons name="mail" size={24} color="black" />
           <TextInput
             style={styles.input}
-            placeholder="Full Name"
+            placeholder="email"
             placeholderTextColor="#ccc"
             value={fullName}
             onChangeText={setFullName}
@@ -51,10 +51,10 @@ function SettingsScreen({ navigation }) {
         </View>
 
         <View style={styles.inputContainer}>
-          <Ionicons name="mail" size={24} color="black" />
+          <Ionicons name="lock-closed" size={24} color="black" />
           <TextInput
             style={styles.input}
-            placeholder="Email Address"
+            placeholder="Password"
             placeholderTextColor="#ccc"
             value={email}
             onChangeText={setEmail}
