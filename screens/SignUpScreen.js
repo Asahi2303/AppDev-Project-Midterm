@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Alert, ImageBackground, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Alert, ImageBackground, TouchableOpacity, Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig.js";
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
 function SignUpScreen() {
   const navigation = useNavigation();
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState(''); // Combined name state
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // Added email state
   const [password, setPassword] = useState('');
+  const [confirmpassword, confirmPassword] = useState('');
 
-  const handleSignUp = () => {
-    // Example: Simple sign-up check
-    if (firstName && lastName && username && password) {
-      Alert.alert('Sign Up Successful');
-      navigation.navigate('Login'); // Navigate back to Login screen after sign up
-    } else {
-      Alert.alert('Please fill in all fields');
+  const isFormValid = () =>
+    email.includes("@") && password === confirmpassword && password.length >= 8; // Fixed variable name
+
+  const handleSignup = async () => { // Changed to handleSignup
+    if (!isFormValid()) {
+      Alert.alert(
+        "Try again",
+        "Please enter a valid email and matching passwords with at least 8 characters"
+      );
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password); // Ensure auth is defined
+      Alert.alert("Success", "Account created successfully");
+      setEmail(""); // Reset email
+      setPassword("");
+      confirmPassword(""); // Corrected function call
+      navigation.navigate("Login");
+    } catch (error) {
+      Alert.alert("Error", `Error creating user: ${error.message}`);
     }
   };
 
@@ -33,29 +49,19 @@ function SignUpScreen() {
           <Ionicons name="person" size={24} color="black" />
           <TextInput
             style={styles.textBox}
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={setFirstName}
+            placeholder="Full Name"
+            value={fullName} // Changed to fullName state
+            onChangeText={setFullName} // Updated to setFullName
           />
         </View>
 
         <View style={styles.inputContainer}>
-          <Ionicons name="person" size={24} color="black" />
+          <Ionicons name="mail" size={24} color="black" />
           <TextInput
             style={styles.textBox}
-            placeholder="Middle Name"
-            value={middleName}
-            onChangeText={setMiddleName}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Ionicons name="person" size={24} color="black" />
-          <TextInput
-            style={styles.textBox}
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={setLastName}
+            placeholder="Email"
+            value={email} // Changed to email state
+            onChangeText={setEmail} // Updated to setEmail
           />
         </View>
 
@@ -79,9 +85,20 @@ function SignUpScreen() {
             onChangeText={setPassword}
           />
         </View>
+        
+        <View style={styles.inputContainer}>
+          <Ionicons name="lock-open" size={24} color="black" />
+          <TextInput
+            style={styles.textBox}
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            value={confirmpassword}
+            onChangeText={confirmPassword}
+          />
+        </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -94,58 +111,45 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    opacity: 0.9, // Optional: to make the background slightly visible
+    padding: 20,
   },
   title: {
-    fontSize: 28,
-    marginBottom: 20,
-    color: '#333',
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    marginBottom: 15,
-    width: '100%',
-    paddingHorizontal: 10,
-    elevation: 2, // Add shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginVertical: 10,
   },
   textBox: {
-    height: 40,
     flex: 1,
-    marginLeft: 10,
-    color: 'black',
+    padding: 10,
+    fontSize: 16,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
+    marginTop: 20,
   },
   button: {
-    backgroundColor: '#fff',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    borderColor: '#ddd',
-    borderWidth: 1,
-
- },
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 10,
+  },
   buttonText: {
     fontSize: 18,
-    color: 'blue',
-    fontWeight: '',
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
