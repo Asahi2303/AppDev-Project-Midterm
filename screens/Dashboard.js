@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
-import { getDatabase, ref, set } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { auth, rtdb } from '../firebaseConfig';
 
-export default function Setpin({ navigation }) {
+export default function Dashboard({ navigation }) {
   const [pin, setPin] = useState('');
   const [pinEntered, setPinEntered] = useState(false);
 
   // Handle keypress to update PIN
   const handleKeyPress = (number) => {
-    if (pin.length === 4) {
+    if (pin.length > 3) {
       alert("Your Pin is already set");
       return;
     }
@@ -30,50 +30,57 @@ export default function Setpin({ navigation }) {
     setPin(pin.slice(0, -1));
   };
 
-  // Handle submit
-  const handleSubmit = () => {
-    if (pin.length === 4) {
-    
+  const handleUnlock = () =>{
+     // Fetch the user's PIN from the database when the component loads
       const userId = auth.currentUser?.uid;
+      
+      if (userId) {
+        // Reference to the user's PIN
+        const pinRef = ref(rtdb, `/pin/${userId}`);
 
-      // Save the PIN to Realtime Database 
-      set(ref(rtdb, `/pin/${userId}` ), pin)
-        .then(() => {
-          
-          alert("PIN has been set successfully! You can now open the lock.");
-          setPin('');
-          setPinEntered(true);
-        })
-        .catch((error) => {
-          // console.error('Error saving PIN:', error);
-          setPin('');
-          setPinEntered(true);
-          alert( "There was an error saving the PIN.");
-        });
+      
+        get(pinRef)
+          .then(snapshot => {
+            if (snapshot.exists()) {
+               const fetchedPin = snapshot.val();  
+               
+                if(pin === fetchedPin){
+                  //set lock to false
+                    set(ref(rtdb, '/lock'), true)
+                      .then(() => {
+                        setPin('');
+                        setPinEntered(true);
+                        alert('You can now pressed the button to unlock')
+                      })
+                      .catch((error) => {
+                        console.error('Error locking :', error);
+                        setPin('');
+                        setPinEntered(true);
+                        alert("There was an error locking.");
+                      });
+                }
 
-        //set lock to false
-        set(ref(rtdb, '/lock'), true)
-          .then(() => {
-            setPin('');
-            setPinEntered(true);
+            
+            } else {
+              console.log("No PIN found for this user.");
+            }
           })
           .catch((error) => {
-            console.error('Error locking :', error);
-            setPin('');
-            setPinEntered(true);
-            alert("There was an error locking.");
+            console.error("Error fetching user PIN: ", error);
           });
-    } else {
-      alert("Please enter a 4-digit PIN.");
-    }
-  };
+      }
+  }
+
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register PIN</Text>
+      <Text style={styles.title}>Enter PIN</Text>
       <View style={styles.pinIndicator}>
         {Array.from({ length: 4 }, (_, index) => (
-          <Text key={index} style={[styles.pinText, { color: index < pin.length ? 'black' : 'gray' }]}>{index < pin.length ? pin[index] : '*'}</Text>
+          <Text key={index} style={[styles.pinText, { color: index < pin.length ? 'black' : 'gray' }]}>
+            {index < pin.length ? pin[index] : '*'}
+          </Text>
         ))}
       </View>
       <View style={styles.keypad}>
@@ -116,15 +123,21 @@ export default function Setpin({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      
+      {/* Centering the buttons */}
       <View style={styles.buttonContainer}>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.backButton} onPress={handleSubmit}>
-            <Text style={styles.backButtonText}>Submit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Dashboard")}>
-            <Text style={styles.backButtonText}>Back</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Direct')}>
+          <Text style={styles.buttonText}>Direct</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Setpin')}>
+          <Text style={styles.buttonText}>Set Pin</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleUnlock}>
+          <Text style={styles.buttonText}>Unlock</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -164,24 +177,25 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'white',
   },
-  backButton: {
-    padding: 10,
-    backgroundColor: 'black',
-    borderRadius: 5,
-    marginHorizontal: 10,
-  },
-  backButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-  },
+  // Styles for buttons
   buttonContainer: {
+    flexDirection: 'row', // Arrange buttons vertically
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20, // Add space between keypad and buttons
   },
-  buttonWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 200,
+  button: {
+    padding: 15,
+    backgroundColor: 'black',
+    borderRadius: 5,
+    marginVertical: 10, // Add vertical spacing between buttons
+    width: 90, // Make buttons wider
+    alignItems: 'center', // Center the text inside the button
+    margin: 5
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
   },
   pinIndicator: {
     flexDirection: 'row',

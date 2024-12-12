@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, Alert, Image } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig'; // Import auth from your firebaseConfig
+import { auth } from '../firebaseConfig'; 
+import logo from '../assets/password-lock.png';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -36,7 +37,7 @@ export default function LoginScreen({ navigation }) {
         console.log('User logged in:', user.email);
         setEmail('');
         setPassword('');
-        navigation.navigate('Setpin');
+        navigation.navigate('Dashboard');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -49,6 +50,12 @@ export default function LoginScreen({ navigation }) {
   return (
     <ImageBackground style={styles.background}>
       <View style={styles.container}>
+        {/* Logo Image */}
+        <Image 
+          source={logo} 
+          style={styles.logo}
+        />
+
         <Text style={styles.title}>Welcome Back</Text>
 
         <TextInput
@@ -87,9 +94,15 @@ const styles = StyleSheet.create({
   container: {
     width: '80%',
     padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', // Slightly transparent white for better visibility
+    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
     borderRadius: 10,
     elevation: 5, // Optional: Add shadow effect
+    alignItems: 'center', // Center content horizontally
+  },
+  logo: {
+    width: 100,  // Adjust width of the logo
+    height: 100, // Adjust height of the logo
+    marginBottom: 20, // Add space below the logo
   },
   title: {
     fontSize: 28,
