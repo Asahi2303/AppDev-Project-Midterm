@@ -19,12 +19,9 @@ function SignUpScreen({ navigation }) {
       .then((userCredential) => {
         // Successful signup
         const user = userCredential.user;
-        console.log('User registered:', user.email);
-        // Reset fields after "signup"
         setEmail('');
         setPassword('');
-        // Optionally, navigate to another screen
-        // navigation.navigate('Home'); // Or wherever you want to go after successful signup
+        
       })
       .catch((error) => {
         const errorCode = error.code;

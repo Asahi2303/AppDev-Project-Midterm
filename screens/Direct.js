@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth, rtdb } from '../firebaseConfig';
 
-export default function Setpin({ navigation }) {
+export default function Direct({ navigation }) {
   const [pin, setPin] = useState('');
   const [pinEntered, setPinEntered] = useState(false);
+
+  useEffect(()=>{
+    alert('This page is for setting direct pin')
+  },[])
 
   // Handle keypress to update PIN
   const handleKeyPress = (number) => {
@@ -34,13 +38,12 @@ export default function Setpin({ navigation }) {
   const handleSubmit = () => {
     if (pin.length === 4) {
     
-      const userId = auth.currentUser?.uid;
-
+     
       // Save the PIN to Realtime Database 
-      set(ref(rtdb, `/pin/${userId}` ), pin)
+      set(ref(rtdb, `/directPins/${pin}` ), pin)
         .then(() => {
           
-          alert("PIN has been set successfully! You can now open the lock.");
+          alert("Direct PIN has been set successfully! You can now open the lock.");
           setPin('');
           setPinEntered(true);
         })
@@ -51,18 +54,6 @@ export default function Setpin({ navigation }) {
           alert( "There was an error saving the PIN.");
         });
 
-        //set lock to false
-        set(ref(rtdb, '/lock'), true)
-          .then(() => {
-            setPin('');
-            setPinEntered(true);
-          })
-          .catch((error) => {
-            console.error('Error locking :', error);
-            setPin('');
-            setPinEntered(true);
-            alert("There was an error locking.");
-          });
     } else {
       alert("Please enter a 4-digit PIN.");
     }
@@ -70,7 +61,7 @@ export default function Setpin({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register PIN</Text>
+      <Text style={styles.title}>Register direct PIN</Text>
       <View style={styles.pinIndicator}>
         {Array.from({ length: 4 }, (_, index) => (
           <Text key={index} style={[styles.pinText, { color: index < pin.length ? 'black' : 'gray' }]}>{index < pin.length ? pin[index] : '*'}</Text>
