@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig'; // Assuming you are exporting auth from the Firebase config
 
 function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignup = () => {
-    // Placeholder for signup logic
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Reset fields after "signup"
-    setEmail('');
-    setPassword('');
+    // Check if email and password are provided
+    if (email === '' || password === '') {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+
+    // Create user with Firebase Authentication
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Successful signup
+        const user = userCredential.user;
+        console.log('User registered:', user.email);
+        // Reset fields after "signup"
+        setEmail('');
+        setPassword('');
+        // Optionally, navigate to another screen
+        // navigation.navigate('Home'); // Or wherever you want to go after successful signup
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert('Signup Error', errorMessage);
+        console.error('Error code:', errorCode, 'Error message:', errorMessage);
+      });
   };
 
   return (
@@ -39,7 +59,10 @@ function SignUpScreen({ navigation }) {
       </TouchableOpacity>
 
       <Text style={styles.footerText}>
-        Already have an account? <Text style={styles.linkText} onPress={() => navigation.navigate("Login")}>Log In</Text>
+        Already have an account?{' '}
+        <Text style={styles.linkText} onPress={() => navigation.navigate('Login')}>
+          Log In
+        </Text>
       </Text>
     </View>
   );

@@ -1,19 +1,53 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Button, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig'; // Import auth from your firebaseConfig
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if the user is logged in
+
+  // Check if the user is already logged in when the component mounts
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setIsLoggedIn(true);
+        navigation.navigate('Setpin');
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+
+    // Cleanup the subscription when the component unmounts
+    return unsubscribe;
+  }, []);
 
   const handleLogin = () => {
-    // Navigate to the SecondPage after clicking Login
-    navigation.navigate("SecondPage");
+    if (email === '' || password === '') {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+
+    // Firebase Authentication login
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('User logged in:', user.email);
+        setEmail('');
+        setPassword('');
+        navigation.navigate('Setpin');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert('Login Error', errorMessage);
+        console.error('Error code:', errorCode, 'Error message:', errorMessage);
+      });
   };
 
   return (
-    <ImageBackground
-      style={styles.background}
-    >
+    <ImageBackground style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>Welcome Back</Text>
 
@@ -37,7 +71,7 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
-          Don't have an account? <Text style={styles.linkText} onPress={() => navigation.navigate("SignUp")}>Sign Up</Text>
+          Don't have an account? <Text style={styles.linkText} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
         </Text>
       </View>
     </ImageBackground>

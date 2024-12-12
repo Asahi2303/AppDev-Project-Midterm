@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen'; // Adjust the path as necessary
 import SignUpScreen from './screens/SignUpScreen'; // Adjust the path as necessary
-import SecondPage from './screens/SecondPage'; // Adjust the path as necessary
 
+import setpinScreen from './screens/Setpin';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -13,7 +13,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="SecondPage" component={SecondPage} />
+        <Stack.Screen name="Setpin" component={setpinScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
