@@ -44,11 +44,13 @@ export default function SecondPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   keypad: {
+   
     marginBottom: 20,
     flexDirection: 'column',
     alignItems: 'center',
@@ -58,22 +60,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   key: {
+
     width: 100, // Increased width for larger buttons
     height: 100, // Increased height for larger buttons
     margin: 10, // Increased margin for spacing
-    backgroundColor: '#007BFF', // Button color
+    backgroundColor: 'black', // Button color
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10, // Optional: Rounded corners
   },
   keyText: {
     fontSize: 40, // Increased font size for better visibility
-    color: '#FFFFFF', // Text color
+    color: 'white', // Text color
   },
   backButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#007BFF',
+    backgroundColor: 'black',
     borderRadius: 5,
   },
   backButtonText: {

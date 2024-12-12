@@ -12,7 +12,6 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <ImageBackground
-      // source={require('../assets/APBCKG.jpg')} // Uncomment and replace with your background image if needed
       style={styles.background}
     >
       <View style={styles.container}>
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // White background for inputs
   },
   button: {
-    backgroundColor: '#007BFF', // Bootstrap primary color
+    backgroundColor: 'black', // Bootstrap primary color
     padding: 15,
     borderRadius: 5,
     width: '100%',
